@@ -20,7 +20,7 @@ module.exports.handler = async(event) =>{
         const decodedFile = Buffer.from(base64File.replace(/^data:image\/\w+;base64,/,""),"base64");
         const params = {
             Bucket: BUCKET_NAME,
-            Key: 'images/${new Date().toISOString()}.jpeg',
+            Key: `images/${new Date().toISOString()}.jpeg`,
             Body: decodedFile,
             ContentType: "image/jpeg",
         }
