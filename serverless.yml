@@ -1,41 +1,41 @@
 service: s3-file-uploade
 
 provider:
- name: aws
- runtime: nodejs12.x
- stage: dev
- region: ap-south-1
+  name: aws
+  runtime: nodejs12.x
+  stage: dev
+  region: ap-south-1
 
 custom:
- fileUploadBucketName: ${self:service}-bucket-${self:provider.stage}
+  fileUploadBucketName: ${self:service}-bucket-${self:provider.stage}
 
 plugins:
- - serverless-iam-roles-per-function
+  - serverless-iam-roles-per-function
 
 functions:
- s3FileUploade:
-  handler: src/upload.handler
-  name: s3-file-uploade
-  description: A lambda handler that uploads a file to a S3 bucket based on a API Gateway trigger.
-  timeout: 60 #seconds
-  memorySize: 128 #mb
-  events:
-   - http:
-      path: images
-      method: POST
-  iamRoleStatements:
-    - Effect: Allow
-      Action:
-      - "s3:Put*"
-      Resource: arn:aws:s3:::${self:custom.fileUploadBucketName}/*    
-  environment:
-   FILE_UPLOAD_BUCKET_NAME: ${self:custom.fileUploadBucketName}   
+  s3FileUploade:
+    handler: src/upload.handler
+    name: s3-file-uploade
+    description: A lambda handler that uploads a file to an S3 bucket based on an API Gateway trigger.
+    timeout: 60 #seconds
+    memorySize: 128 #mb
+    events:
+      - http:
+        path: images
+        method: POST
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - "s3:Put*"
+        Resource: arn:aws:s3:::${self:custom.fileUploadBucketName}/*    
+    environment:
+      FILE_UPLOAD_BUCKET_NAME: ${self:custom.fileUploadBucketName}   
 
 
 resources:
- Resources:
-  FileBucket:
-   Type: AWS::S3::Bucket
-   Properties:
-    BucketName: ${self:custom.fileUploadBucketName}
-    AccessControl: PublicRead
+  Resources:
+    FileBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: ${self:custom.fileUploadBucketName}
+        AccessControl: PublicRead

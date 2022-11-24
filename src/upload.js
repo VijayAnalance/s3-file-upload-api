@@ -17,10 +17,10 @@ module.exports.handler = async(event) =>{
     try {
         const parseBody = JSON.parse(event.body);
         const base64File = parseBody.file;
-        const decodedFile = Buffer.from(base64File.replace(/^data:image\/\w+;base64,/,""),"base64");
+        const decodedFile = Buffer.from(base64File.replace(/^data:image\/\w+;base64,/, ""), "base64");
         const params = {
             Bucket: BUCKET_NAME,
-            Key: 'images/${new Date().toISOString()}.jpeg',
+            Key: `images/${new Date().toISOString()}.jpeg`,
             Body: decodedFile,
             ContentType: "image/jpeg",
         }
@@ -31,7 +31,7 @@ module.exports.handler = async(event) =>{
         
     } catch (e) {
         console.error(e);
-        response.body = JSON.stringify({message: "File failed to upload", e});
+        response.body = JSON.stringify({ message: "File failed to upload", errorMessage: e });
         response.statusCode = 500;
 
 
