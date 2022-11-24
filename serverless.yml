@@ -1,4 +1,4 @@
-service: s3-file-upload
+service: s3-file-upload1
 
 provider:
   name: aws
@@ -13,9 +13,9 @@ plugins:
   - serverless-iam-roles-per-function
 
 functions:
-  s3FileUpload:
-    handler: src/upload.handler
-    name: s3-file-upload
+  s3FileUpload1:
+    handler: src/upload1.handler
+    name: s3-file-upload1
     description: A lambda handler that uploads a file to an S3 bucket based on an API Gateway trigger.
     timeout: 60 # seconds
     memorySize: 128 # mb
